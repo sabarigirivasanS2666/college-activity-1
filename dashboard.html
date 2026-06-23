@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard – Odoo Café POS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="index.html" class="logo">☕ Odoo<span>Café</span></a>
+            <div class="side-section-title">Overview</div>
+            <a href="#" class="side-link active" data-section="overview">📊 Dashboard</a>
+            <div class="side-section-title">Menu</div>
+            <a href="#" class="side-link" data-section="products">🍔 Products</a>
+            <a href="#" class="side-link" data-section="categories">🏷️ Categories</a>
+            <div class="side-section-title">Restaurant</div>
+            <a href="#" class="side-link" data-section="floors">🪑 Floors & Tables</a>
+            <a href="#" class="side-link" data-section="customers">👥 Customers</a>
+            <a href="#" class="side-link" data-section="coupons">🎟️ Coupons</a>
+            <div class="side-section-title">Account</div>
+            <a href="index.html" class="side-link" id="logoutBtn">🚪 Logout</a>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div>
+                    <button class="sidebar-toggle btn btn-ghost btn-sm" style="display:none;">☰</button>
+                    <h1 id="pageTitle">Dashboard Overview</h1>
+                </div>
+                <div class="user-chip glass-card">
+                    <div class="avatar" id="userAvatar">AD</div>
+                    <span id="userName">Admin User</span>
+                </div>
+            </div>
+
+            <section id="section-overview" class="dash-section">
+                <div class="stats-grid">
+                    <div class="stat-card glass-card">
+                        <div>
+                            <div class="stat-label">Total Orders</div>
+                            <div class="stat-num" id="statOrders">128</div>
+                            <div class="stat-change stat-up">All time</div>
+                        </div>
+                        <div class="stat-icon">🧾</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div>
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-num" id="statRevenue">₹34,560</div>
+                            <div class="stat-change stat-up">All time</div>
+                        </div>
+                        <div class="stat-icon">💰</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div>
+                            <div class="stat-label">Avg Order Value</div>
+                            <div class="stat-num" id="statAOV">₹270</div>
+                        </div>
+                        <div class="stat-icon">📦</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div>
+                            <div class="stat-label">Products</div>
+                            <div class="stat-num" id="statProducts">28</div>
+                        </div>
+                        <div class="stat-icon">🍔</div>
+                    </div>
+                </div>
+
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div style="display:flex; gap:14px; flex-wrap:wrap;">
+                        <a href="#" class="btn btn-primary">Open POS Terminal</a>
+                        <a href="#" class="btn btn-outline">Kitchen Display</a>
+                        <a href="#" class="btn btn-outline">View Reports</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-products" class="dash-section" style="display:none;">
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Products</h3>
+                        <button class="btn btn-primary btn-sm" id="addProductBtn">+ Add Product</button>
+                    </div>
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span class="ic">🔍</span>
+                            <input type="text" class="form-control" id="productSearch" placeholder="Search products...">
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-categories" class="dash-section" style="display:none;">
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Categories</h3>
+                        <button class="btn btn-primary btn-sm" id="addCategoryBtn">+ Add Category</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Color</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-floors" class="dash-section" style="display:none;">
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Floors & Tables</h3>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-outline btn-sm" id="addFloorBtn">+ Add Floor</button>
+                            <button class="btn btn-primary btn-sm" id="addTableBtn">+ Add Table</button>
+                        </div>
+                    </div>
+                    <div id="floorsContainer"></div>
+                </div>
+            </section>
+
+            <section id="section-customers" class="dash-section" style="display:none;">
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Customers</h3>
+                        <button class="btn btn-primary btn-sm" id="addCustomerBtn">+ Add Customer</button>
+                    </div>
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span class="ic">🔍</span>
+                            <input type="text" class="form-control" id="customerSearch"
+                                placeholder="Search customers...">
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-coupons" class="dash-section" style="display:none;">
+                <div class="panel glass-card">
+                    <div class="panel-head">
+                        <h3>Coupons</h3>
+                        <button class="btn btn-primary btn-sm" id="addCouponBtn">+ Add Coupon</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="couponsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="genericModal">
+        <div class="modal-box glass-card">
+            <div class="modal-head">
+                <h3 id="genericModalTitle">Modal</h3>
+                <button class="modal-close" data-close="genericModal">✕</button>
+            </div>
+            <div id="genericModalBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
